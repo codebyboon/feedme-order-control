@@ -5,8 +5,6 @@ import cors from "cors";
 
 const app = express();
 
-const pendingList = [];
-
 app.use(cors());
 
 app.get("/", (req, res) => {

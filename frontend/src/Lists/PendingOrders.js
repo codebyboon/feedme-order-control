@@ -1,36 +1,42 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const PendingOrders = () => {
-  const [data, setData] = useState([]);
+/**
+ * * To display the pending orders for both normal & VIP orders
+ */
 
+const PendingOrders = () => {
+  const [orders, setOrders] = useState([]);
+
+  // To update the pending orders whenever new order is added
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://localhost:3001/orders");
-        setData(response.data);
+        setOrders(response.data);
       } catch (err) {
         console.error("Error fetching orders: ", err);
       }
     };
 
     fetchData();
-  }, []);
+  }, [orders]);
 
+  // To render the pending orders list
   return (
     <div className="ml-3">
       <h1 className="text-xl font-bold">PENDING</h1>
-      <p>=================</p>
+      <p>======================</p>
       <div className="flex flex-row">
         <div className="mr-10">
-          <div>Order</div>
-          {data.map((order, index) => (
+          <div className="font-semibold underline text-lg">Order</div>
+          {orders.map((order, index) => (
             <div key={order.id}>Order {order.id}</div>
           ))}
         </div>
         <div className="ml-10">
-          <div>Order Type</div>
-          {data.map((order, index) => (
+          <div className="font-semibold underline text-lg">Order Type</div>
+          {orders.map((order, index) => (
             <div key={order.id}>{order.orderType}</div>
           ))}
         </div>

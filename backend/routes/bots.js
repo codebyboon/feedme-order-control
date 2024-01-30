@@ -1,12 +1,11 @@
 import { Router } from "express";
+import { getBots, addBots, removeBots } from "../controller/botsController.js";
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("This is bot page");
-});
+router.get("/", getBots);
 
-router.get("/addbot", (req, res) => {});
+router.post("/add", addBots);
 
-router.get("/removebot", (req, res) => {});
+router.post("/remove", removeBots);
 
 export default router;
