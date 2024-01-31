@@ -1,14 +1,11 @@
 import React from "react";
 import axios from "axios";
 
-const AddBot = () => {
+const AddBot = ({ addBot }) => {
   const handleClick = async () => {
     try {
       const response = await axios.post("http://localhost:3001/bots/add");
-
-      if (response.status === 201) {
-        console.log("Added bot successfully.");
-      }
+      addBot(response.data);
     } catch (err) {
       console.log("Error adding bot: ", err);
     }

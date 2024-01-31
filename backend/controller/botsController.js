@@ -1,4 +1,3 @@
-import { processOrder } from "../controller/ordersController.js";
 let botsList = [];
 let id = 0;
 
@@ -10,18 +9,26 @@ const addBots = (req, res) => {
   id++;
 
   botsList.push({ id: id, status: "IDLE" });
-  processOrder();
-  res.status(201).send();
+  res.json(botsList);
 };
 
 const removeBots = (req, res) => {
-  id--;
-  botsList.pop();
-  res.status(204).send();
+  if (id > 1) {
+    id--;
+    botsList.pop();
+    res.json(botsList);
+  }
 };
 
 const getIdleBots = () => {
   return botsList.find((bot) => bot.status === "IDLE");
 };
 
-export { getBots, addBots, removeBots, getIdleBots };
+function updateBots(index, idleBot) {
+  const updateStatus = { id: idleBot.id, status: idleBot.status };
+  botsList.splice(index, 1, updateStatus);
+
+  return botsList;
+}
+
+export { getBots, addBots, removeBots, getIdleBots, updateBots };

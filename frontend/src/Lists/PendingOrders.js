@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 
 /**
+ * * SUMMARY
  * * To display the pending orders for both normal & VIP orders
  */
 
-const PendingOrders = () => {
-  const [orders, setOrders] = useState([]);
+const PendingOrders = ({ orders }) => {
+  /**
+   * ! Deprecated due to the constant fetching of the pending orders
+   const [orders, setOrders] = useState([]);
 
-  // To update the pending orders whenever new order is added
+  To update the pending orders whenever new order is added
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,7 +22,7 @@ const PendingOrders = () => {
     };
 
     fetchData();
-  }, [orders]);
+  }, [orders]);*/
 
   // To render the pending orders list
   return (

@@ -6,7 +6,7 @@ import axios from "axios";
  * * It will handle upon clicking the "Add Normal Order" button.
  */
 
-const AddNormalOrder = () => {
+const AddNormalOrder = ({ addOrder }) => {
   // Handle the click event on the "Add Normal Order" button
   const handleClick = async () => {
     try {
@@ -15,6 +15,10 @@ const AddNormalOrder = () => {
       if (response.status === 200) {
         console.log("Added normal order successfully.");
       }
+
+      // Newly added to fetch the pending order whenever there is new order
+      const order = await axios.get("http://localhost:3001/orders");
+      addOrder(order.data);
     } catch (err) {
       console.log("Error adding normal order: ", err);
     }

@@ -1,14 +1,11 @@
 import React from "react";
 import axios from "axios";
 
-const RemoveBot = () => {
+const RemoveBot = ({ removeBot }) => {
   const handleClick = async () => {
     try {
       const response = await axios.post("http://localhost:3001/bots/remove");
-
-      if (response.status === 200) {
-        console.log("Removed bot successfully.");
-      }
+      removeBot(response.data);
     } catch (err) {
       console.log("Error removing bot: ", err);
     }

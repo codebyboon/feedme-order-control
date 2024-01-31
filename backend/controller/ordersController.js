@@ -1,8 +1,6 @@
-import { getIdleBots } from "../controller/botsController.js";
+import { updateBots } from "./botsController.js";
 
 let orderList = [];
-let normalOrder = [];
-let vipOrder = [];
 let completedOrders = [];
 
 let id = 0;
@@ -10,7 +8,6 @@ let id = 0;
 let messageStatus = "";
 
 const getOrders = (req, res) => {
-  orderList = vipOrder.concat(normalOrder);
   res.json(orderList);
   //   res.send("All orders");
 };
@@ -22,36 +19,37 @@ const getCompletedOrders = (req, res) => {
 const addNormalOrder = (req, res) => {
   id++;
 
-  normalOrder.push({ id: id, orderType: "Normal" });
-  messageStatus = processOrder();
+  orderList.push({ id: id, orderType: "Normal" });
   res.status(201).send(messageStatus);
 };
 
 const addVipOrder = (req, res) => {
   id++;
 
-  vipOrder.push({ id: id, orderType: "VIP" });
-  messageStatus = processOrder();
+  orderList.unshift({ id: id, orderType: "VIP" });
   res.status(201).send(messageStatus);
 };
 
 const processOrder = (req, res) => {
-  const idleBot = getIdleBots();
-
-  if (!idleBot) {
-    return "No idle bots available.";
-  }
+  let botsList;
+  const idleBot = req.body;
 
   const orderToProcess = orderList.shift();
+
   if (!orderToProcess) {
-    return "No orders to process.";
+    return;
   }
 
-  idleBot.status = "Busy processing " + orderToProcess;
+  idleBot.status = "Busy processing Order " + orderToProcess.id;
   setTimeout(() => {
     completedOrders.push({ ...orderToProcess });
     idleBot.status = "IDLE";
+    botsList = updateBots(index, idleBot);
   }, 10000);
+
+  const index = orderList.indexOf(orderToProcess);
+  botsList = updateBots(index, idleBot);
+  res.json({ orderList: orderList, botsList: botsList });
 };
 
 export {
