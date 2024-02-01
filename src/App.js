@@ -15,9 +15,6 @@ function App() {
 
   const [bots, setBots] = useState([]);
 
-  /**
-   * * Orders section
-   */
   // Add a new order
   const handleAddOrder = (orderType) => {
     addOrder(
@@ -50,9 +47,6 @@ function App() {
     );
   };
 
-  /**
-   * * Bots section
-   */
   // Add a bot
   const handleAddBot = () => {
     addBot(bots, setBots);
