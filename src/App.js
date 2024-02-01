@@ -78,12 +78,12 @@ function App() {
 
   return (
     <div>
-      <div className="flex flex-row justify-between">
+      <div className="flex flex-row justify-evenly">
         <OrderList orders={pendingOrders} title="Pending Orders" />
         <OrderList orders={completedOrders} title="Completed Orders" />
         <BotList bots={bots} />
       </div>
-      <div className="absolute bottom-10">
+      <div className="flex justify-center fixed bottom-10 left-0 right-0 mx-auto">
         <ControlPanel
           addOrder={handleAddOrder}
           addBot={handleAddBot}

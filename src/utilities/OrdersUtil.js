@@ -1,3 +1,10 @@
+/**
+ * * Utilities/Methods being used for Orders
+ * * addOrder => Add new order into the order list
+ * * removeOrder => Remove order from Completed Order list when the order is returned back to PENDING order list
+ * * processOrder => Update the order to be processed by idle bot
+ */
+
 export const addOrder = (
   orderType,
   lastOrderId,
@@ -7,10 +14,10 @@ export const addOrder = (
 ) => {
   const newOrder = { id: lastOrderId, type: orderType };
 
-  /**
-   * * Check if the order type is Normal or VIP.
-   * * If it is Normal order, add the order to the last of the list.
-   * * If it is VIP order, add the order to the last of VIP but before Normal orders.
+  /*
+   Check if the order type is Normal or VIP.
+   If it is Normal order, add the order to the last of the list.
+   If it is VIP order, add the order to the last of VIP but before Normal orders.
    */
   if (orderType === "Normal") {
     setPendingOrders((prev) => [...prev, newOrder]);
@@ -25,14 +32,15 @@ export const addOrder = (
       }
     }
 
+    //Update the index to insert after the last of VIP order.
     if (lastVIPOrderIdx >= 0) {
-      insertIdx = lastVIPOrderIdx + 1; //Update the index to insert after the last of VIP order.
+      insertIdx = lastVIPOrderIdx + 1;
     }
     setPendingOrders((prev) => [
       ...prev.slice(0, insertIdx), // To get the current VIP order list
       newOrder, // To add the new order in the position after current VIP order list
-      ...prev.slice(insertIdx),
-    ]); // To add the remaining order list
+      ...prev.slice(insertIdx), // To add the remaining order list
+    ]);
   }
   setLastOrderId(lastOrderId + 1);
 };
@@ -43,6 +51,10 @@ export const removeOrder = (
   setCompletedOrders,
   setRemovingOrder
 ) => {
+  /*
+  Check if the order in completed order list is also in removing order.
+  If yes, remove the order from the completed order list and removing order list.
+  */
   const updatedCompletedOrders = completedOrders.filter(
     (order) => !removingOrder.some((removing) => removing.id === order.id)
   );
