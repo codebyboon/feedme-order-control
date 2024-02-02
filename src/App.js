@@ -73,8 +73,8 @@ function App() {
   return (
     <div>
       <div className="flex flex-row justify-evenly">
-        <OrderList orders={pendingOrders} title="Pending Orders" />
-        <OrderList orders={completedOrders} title="Completed Orders" />
+        <OrderList orders={pendingOrders} title="PENDING" />
+        <OrderList orders={completedOrders} title="COMPLETED" />
         <BotList bots={bots} />
       </div>
       <div className="flex justify-center fixed bottom-10 left-0 right-0 mx-auto">
